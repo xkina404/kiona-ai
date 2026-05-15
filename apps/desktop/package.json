@@ -1,0 +1,64 @@
+{
+  "name": "kiona-desktop",
+  "version": "0.1.0",
+  "description": "Kiona AI Desktop Application",
+  "main": "dist/main.js",
+  "homepage": "./",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm:dev:react\" \"npm:dev:electron\"",
+    "dev:react": "react-scripts start",
+    "dev:electron": "wait-on http://localhost:3000 && electron .",
+    "build": "npm run build:react && npm run build:electron",
+    "build:react": "react-scripts build",
+    "build:electron": "electron-builder",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.2",
+    "zustand": "^4.4.0",
+    "framer-motion": "^10.16.0",
+    "lucide-react": "^0.292.0"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.0",
+    "react-scripts": "5.0.1",
+    "@types/react": "^18.2.0",
+    "@types/node": "^20.10.0",
+    "concurrently": "^8.2.0",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.kiona.ai",
+    "productName": "Kiona AI",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}
