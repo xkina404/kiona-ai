@@ -216,7 +216,7 @@ MIT License - see [LICENSE](./LICENSE) file
 - Issues: [GitHub Issues](https://github.com/xkina404/kiona-ai/issues)
 - Discussions: [GitHub Discussions](https://github.com/xkina404/kiona-ai/discussions)
 - Documentation: [https://kiona-ai.dev](https://kiona-ai.dev)
-
+- donation      : [https://ko-fi.com/xkina404/goal?g=0](https://ko-fi.com/xkina404/goal?g=0)
 ---
 
 **Made with ❤️ by xkina404**
