@@ -16,6 +16,7 @@ AI Virtual Assistant dengan dual mode (local & cloud), Live2D avatar, voice inte
 - **Text-to-Speech (TTS)**: Suara natural dengan sinkronisasi avatar
 - **Speech-to-Text (STT)**: Voice input dengan real-time transcription
 - **Avatar Customization**: Pilih berbagai avatar
+- **Easy Live2D Import**: Langsung impor dan Live2D otomatis ter-load
 
 ### UI & Interface
 - **Web UI**: Mirip DeepSeek/Claude/Gemini dengan dark mode
@@ -117,13 +118,84 @@ DEFAULT_VOICE=en_US
 DEFAULT_AVATAR=default_v1
 ```
 
+## 🎨 Live2D Avatar Integration
+
+### Quick Setup - Auto Import Live2D
+
+Kamu bisa menambahkan Live2D avatar hanya dengan melakukan import! Live2D akan otomatis ter-load ketika kamu menggunakan avatar package.
+
+```typescript
+// File: apps/web/src/components/Avatar.tsx
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { AvatarManager, DEFAULT_AVATARS } from '@kiona/avatar'; // Live2D otomatis ter-load!
+
+export default function Avatar() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const managerRef = useRef<AvatarManager | null>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    
+    // Instantiate avatar manager - Live2D sudah siap digunakan
+    managerRef.current = new AvatarManager(DEFAULT_AVATARS);
+    managerRef.current.loadAvatar('default_v1', canvasRef.current);
+  }, []);
+
+  return (
+    <div className="h-full flex flex-col bg-slate-900 overflow-hidden">
+      <div className="flex-1 flex items-center justify-center bg-gradient-to-b from-slate-800 to-slate-900">
+        <canvas
+          ref={canvasRef}
+          className="w-full h-full"
+          style={{ maxHeight: '100%', maxWidth: '100%' }}
+        />
+      </div>
+      <div className="border-t border-slate-800 p-4 text-center">
+        <p className="text-sm font-medium">Default Avatar</p>
+        <p className="text-xs text-gray-400 mt-1">AI Companion</p>
+      </div>
+    </div>
+  );
+}
+```
+
+### Custom Avatar dengan Live2D
+
+```typescript
+import { AvatarManager, type AvatarConfig } from '@kiona/avatar';
+
+const customAvatars: AvatarConfig[] = [
+  {
+    id: 'custom_v1',
+    name: 'My Custom Avatar',
+    modelPath: '/models/avatars/custom/model.json',
+    preview: '/avatars/custom.png',
+    animations: ['idle', 'speaking', 'happy', 'sad'],
+  },
+];
+
+const manager = new AvatarManager(customAvatars);
+// Live2D sudah ter-load otomatis!
+```
+
+### Available Live2D Features
+
+- ✅ Automatic Live2D loading pada import
+- ✅ Multiple avatar support
+- ✅ Custom avatar configuration
+- ✅ Animation playback
+- ✅ Audio synchronization
+- ✅ Expression & Motion control
+
 ## 📦 Technologies
 
 ### Frontend
 - **Web**: Next.js 14+, React 18+, Tailwind CSS
 - **Desktop**: Electron, React
 - **UI**: Shadcn/ui, Framer Motion
-- **Avatar**: Pixi.js, Live2D SDK
+- **Avatar**: Pixi.js, Live2D SDK (Auto-loaded)
 
 ### Backend
 - **Runtime**: Node.js + Express
